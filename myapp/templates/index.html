@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+     Index | Page 
+{% endblock title %}
+   
+{% block body %}
+  <div class="container">
+    <div class="row">
+      
+      {% for prod in all_prod %}
+      <div class="col-lg-4">
+        <div class="card" >
+          <img src="{{prod.image.url}}"   >
+
+
+          <div class="card-body">
+            <h5 class="card-title">{{prod.name}}</h5>
+              
+             
+                
+            <form method="POST">
+              {% csrf_token %}
+              <div class="radio-toolbar ">
+                {% for i in prod.products_name.all %}
+                
+                
+                <input  type="radio" name="var" onclick="myFunction({{i.price}},{{prod.id}})" required value="{{i.price}}"  id="{{i.weight}}{{prod}}">
+                <label class="mt-1" for="{{i.weight}}{{prod}}">{{i.weight}} - {{i.tag}} </label>
+                {% endfor %}
+              </div>
+
+              <div ><h2 style="padding: 10px; display: none;" id="price_block{{prod.id}}">₹ 200</h2></div>
+              <p>
+                
+              </p>
+              
+              
+              <select name="quantity" id="">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            <button type="submit" class="btn btn-primary">Add to cart</button>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+{% endblock body %}
+   

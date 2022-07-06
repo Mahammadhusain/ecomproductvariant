@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="container">
+    <dikv class="row mt-3">
+        <div class="col-sm-12">
+            <h3>Cart</h3>
+        </div>
+        <div class="col-sm-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    {% for i in cart_items %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.product}}/<strong><small>({{i.product.weight}}{{i.product.tag}})</small></strong></td>
+                        <td>₹ {{i.product.price}}</td>
+                        <td>
+                            <form action="{% url 'updatecart' %}" method="POST">
+                                {% csrf_token %}
+                            
+                                <div>
+                                    <input type="hidden" value="{{i.product.id}}" name="prod_id">
+
+                                    <input type="number" class="form-control"
+                                        style="width: 80px; background-color: burlywood; font-weight: 700; text-align: center;"
+                                        value="{{i.quantity}}" name="prod_qua" min="0" max="5">
+                                </div>
+                            
+                        </td>
+                        <td>{{i.product_total}}</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-6">
+            <button class="btn btn-primary " type="submit">Update cart</button>
+        </div>
+        <div class="col-sm-6 d-flex flex-row-reverse">
+            <a class="btn btn-warning" href="">Proceed to checkout</a>
+        </div>
+    </form>
+    </dikv>
+</div>
+{% endblock body %}
